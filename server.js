@@ -82,9 +82,12 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-mongoose.connect("mongodb://127.0.0.1:27017/TechLectureDB", {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  "mongodb+srv://omrip500:uNQmn2uUoWsUaboM@cluster0.mti5jjd.mongodb.net/",
+  {
+    useNewUrlParser: true,
+  }
+);
 
 const userSchema = new mongoose.Schema({
   firstName: {
