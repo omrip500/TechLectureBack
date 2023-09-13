@@ -294,7 +294,7 @@ app.get("/studentsUploads", async function (req, res) {
       res.json({
         status: 200,
         message: "Found student file url",
-        fileUrl: `http://localhost:8080/studentsUploads/${newestFile}`,
+        fileUrl: `https://techlectureback.onrender.com/studentsUploads/${newestFile}`,
         userFullName: userFullName,
         presentationNumber: presentationNumber,
       });
