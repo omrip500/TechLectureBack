@@ -382,7 +382,11 @@ app.post("/deleteUserActivePresentation/", async function (req, res) {
 app.post("/register", async (req, res) => {
   const saltRounds = 10;
 
-  const foundedUserByEmail = await User.findOne({ email: req.body.email });
+  try {
+    const foundedUserByEmail = await User.findOne({ email: req.body.email });
+  } catch (error) {
+    console.log(error);
+  }
 
   if (foundedUserByEmail) {
     res.json({ status: 409, message: "User has an account" });
