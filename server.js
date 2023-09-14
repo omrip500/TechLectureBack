@@ -235,21 +235,25 @@ app.post(
     //get also the full name from the user and put it into
     //the database - V
 
-    const userFile = new UserFile({
-      fileNumber: studentFileNumber,
-      userFullName: req.body.usersendFileName,
-      presentationNumber: req.body.presentationNumber,
-    });
+    try {
+      const userFile = new UserFile({
+        fileNumber: studentFileNumber,
+        userFullName: req.body.usersendFileName,
+        presentationNumber: req.body.presentationNumber,
+      });
 
-    userFile.save();
+      userFile.save();
 
-    const fileNumber = studentFileNumber;
-    res.json({
-      status: 200,
-      message: "Student file uploaded succsessfully",
-      studentFileNumber: fileNumber,
-      studentFileType: fileNumber.split(".")[1],
-    });
+      const fileNumber = studentFileNumber;
+      res.json({
+        status: 200,
+        message: "Student file uploaded succsessfully",
+        studentFileNumber: fileNumber,
+        studentFileType: fileNumber.split(".")[1],
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 );
 
