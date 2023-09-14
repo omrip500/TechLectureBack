@@ -384,84 +384,84 @@ app.post("/register", async (req, res) => {
 
   try {
     const foundedUserByEmail = await User.findOne({ email: req.body.email });
-  } catch (error) {
-    console.log(error);
-  }
 
-  if (foundedUserByEmail) {
-    res.json({ status: 409, message: "User has an account" });
-    return;
-  } else {
-    if (req.body.password.length < 3) {
-      res.json({
-        status: 508,
-        message: "The password must contain at least three characters",
-      });
+    if (foundedUserByEmail) {
+      res.json({ status: 409, message: "User has an account" });
       return;
-    }
-
-    bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-      // Store hash in your password DB.
-      const user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        password: hash,
-        email: req.body.email,
-        role: req.body.role,
-        usage: req.body.usage,
-      });
-
-      user.save();
-      if (err) {
-        console.log(err);
+    } else {
+      if (req.body.password.length < 3) {
+        res.json({
+          status: 508,
+          message: "The password must contain at least three characters",
+        });
+        return;
       }
 
-      console.log("email: " + req.body.email);
+      bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+        // Store hash in your password DB.
+        const user = new User({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          password: hash,
+          email: req.body.email,
+          role: req.body.role,
+          usage: req.body.usage,
+        });
 
-      let mailOptions = {
-        from: "omrip500@gmail.com",
-        to: req.body.email,
-        subject:
-          "Welcome to TechLecture - Your Smart Lecture Management Platform!",
-        text: `Dear ${req.body.firstName + " " + req.body.lastName},
-
-          Welcome to TechLecture, the intelligent platform for managing lectures and presentations! We're thrilled to have you on board and look forward to helping you streamline your lecture management experience.
-
-          At TechLecture, we understand the importance of efficient and organized lecture management, and we've designed our platform to make your life easier. Whether you're a teacher, lecturer, or event organizer, our user-friendly features will empower you to create, schedule, and manage your lectures with ease.
-
-          Here are some key benefits of using TechLecture:
-
-          Effortless Lecture Creation: Our intuitive interface allows you to create engaging lectures effortlessly. You can easily add content, multimedia elements, and interactive features to keep your audience engaged.
-
-          Smart Scheduling: TechLecture's scheduling tools help you plan your lectures efficiently. You can set up recurring events, send automatic reminders to participants, and avoid scheduling conflicts.
-
-          Audience Interaction: Engage with your audience like never before. TechLecture offers real-time polling, Q&A sessions, and feedback collection features to make your lectures interactive and insightful.
-
-          Resource Management: Manage your lecture materials, documents, and resources in one centralized location. Say goodbye to scattered files and confusion.
-
-          Analytics and Insights: Get valuable insights into your lecture performance. TechLecture provides analytics on participant engagement, attendance, and more, helping you improve your lectures over time.
-
-          To get started, simply log in to your TechLecture account using your registered email ([User's Email]) and the password you set during registration. If you have any questions or need assistance, our dedicated support team is here to help you every step of the way. Feel free to reach out to us at [Support Email] for any inquiries or guidance.
-
-          Once again, welcome to TechLecture! We're excited to have you as a part of our community. Start exploring the platform and experience the difference that smart lecture management can make.
-
-          Thank you for choosing TechLecture, where lectures meet innovation.
-
-          Best regards,
-          Omri Pinchasov
-          TechLecture Team`,
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Email sent: " + info.response);
+        user.save();
+        if (err) {
+          console.log(err);
         }
-      });
 
-      res.json({ status: 201, message: "User has registered" });
-    });
+        console.log("email: " + req.body.email);
+
+        let mailOptions = {
+          from: "omrip500@gmail.com",
+          to: req.body.email,
+          subject:
+            "Welcome to TechLecture - Your Smart Lecture Management Platform!",
+          text: `Dear ${req.body.firstName + " " + req.body.lastName},
+
+            Welcome to TechLecture, the intelligent platform for managing lectures and presentations! We're thrilled to have you on board and look forward to helping you streamline your lecture management experience.
+
+            At TechLecture, we understand the importance of efficient and organized lecture management, and we've designed our platform to make your life easier. Whether you're a teacher, lecturer, or event organizer, our user-friendly features will empower you to create, schedule, and manage your lectures with ease.
+
+            Here are some key benefits of using TechLecture:
+
+            Effortless Lecture Creation: Our intuitive interface allows you to create engaging lectures effortlessly. You can easily add content, multimedia elements, and interactive features to keep your audience engaged.
+
+            Smart Scheduling: TechLecture's scheduling tools help you plan your lectures efficiently. You can set up recurring events, send automatic reminders to participants, and avoid scheduling conflicts.
+
+            Audience Interaction: Engage with your audience like never before. TechLecture offers real-time polling, Q&A sessions, and feedback collection features to make your lectures interactive and insightful.
+
+            Resource Management: Manage your lecture materials, documents, and resources in one centralized location. Say goodbye to scattered files and confusion.
+
+            Analytics and Insights: Get valuable insights into your lecture performance. TechLecture provides analytics on participant engagement, attendance, and more, helping you improve your lectures over time.
+
+            To get started, simply log in to your TechLecture account using your registered email ([User's Email]) and the password you set during registration. If you have any questions or need assistance, our dedicated support team is here to help you every step of the way. Feel free to reach out to us at [Support Email] for any inquiries or guidance.
+
+            Once again, welcome to TechLecture! We're excited to have you as a part of our community. Start exploring the platform and experience the difference that smart lecture management can make.
+
+            Thank you for choosing TechLecture, where lectures meet innovation.
+
+            Best regards,
+            Omri Pinchasov
+            TechLecture Team`,
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Email sent: " + info.response);
+          }
+        });
+
+        res.json({ status: 201, message: "User has registered" });
+      });
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 
