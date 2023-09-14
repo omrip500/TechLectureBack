@@ -380,9 +380,8 @@ app.post("/deleteUserActivePresentation/", async function (req, res) {
 });
 
 app.post("/register", async (req, res) => {
-  const saltRounds = 10;
-
   try {
+    const saltRounds = 10;
     const foundedUserByEmail = await User.findOne({ email: req.body.email });
 
     if (foundedUserByEmail) {
