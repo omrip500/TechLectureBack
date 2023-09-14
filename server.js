@@ -175,28 +175,32 @@ const PresentationSchema = new mongoose.Schema({
 const Presentation = mongoose.model("presentations", PresentationSchema);
 
 app.post("/upload", upload.single("file"), async (req, res) => {
-  const foundedPresentationByFileName = await Presentation.findOne({
-    fileName: multerFileName.slice(0, -4),
-  });
-
-  if (!foundedPresentationByFileName) {
-    const presentation = new Presentation({
-      fileNumber: multerFileName.slice(0, -4),
-      fileType: multerFileName.split(".")[1],
-      lecturerName: req.body.lecturerName,
-      hours: req.body.hours,
-      lectureTopic: req.body.topic,
-      lecturerEmail: req.body.lecturerEmail,
-      date: req.body.date,
+  try {
+    const foundedPresentationByFileName = await Presentation.findOne({
+      fileName: multerFileName.slice(0, -4),
     });
-    presentation.save();
-  }
 
-  res.json({
-    status: 200,
-    message: "File uploaded successfully to Database",
-    fileName: multerFileName.slice(0, -4),
-  });
+    if (!foundedPresentationByFileName) {
+      const presentation = new Presentation({
+        fileNumber: multerFileName.slice(0, -4),
+        fileType: multerFileName.split(".")[1],
+        lecturerName: req.body.lecturerName,
+        hours: req.body.hours,
+        lectureTopic: req.body.topic,
+        lecturerEmail: req.body.lecturerEmail,
+        date: req.body.date,
+      });
+      presentation.save();
+    }
+
+    res.json({
+      status: 200,
+      message: "File uploaded successfully to Database",
+      fileName: multerFileName.slice(0, -4),
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 app.get("/upload/:fileNumber", async (req, res) => {
