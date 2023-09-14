@@ -9,16 +9,11 @@ const mongoose = require("mongoose");
 const path = require("path");
 const fs = require("fs-extra");
 const bcrypt = require("bcrypt");
-
-const uploadFormIcludingFile = require("./uploadFormIncludingFile");
 const { log } = require("console");
-
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
-
-app.use("/submitForm", uploadFormIcludingFile);
 
 ///////////////////////Socket.io initialzing////////////////////////////
 const http = require("http");
