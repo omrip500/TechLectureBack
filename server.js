@@ -466,39 +466,43 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const foundedUserByEmail = await User.findOne({ email: req.body.email });
-  if (foundedUserByEmail) {
-    bcrypt.compare(
-      req.body.password,
-      foundedUserByEmail.password,
-      function (err, result) {
-        if (result) {
-          const jwtToken = jwt.sign(
-            {
-              id: foundedUserByEmail.id,
-              email: foundedUserByEmail.email,
-            },
-            "This is my secret"
-          );
+  try {
+    const foundedUserByEmail = await User.findOne({ email: req.body.email });
+    if (foundedUserByEmail) {
+      bcrypt.compare(
+        req.body.password,
+        foundedUserByEmail.password,
+        function (err, result) {
+          if (result) {
+            const jwtToken = jwt.sign(
+              {
+                id: foundedUserByEmail.id,
+                email: foundedUserByEmail.email,
+              },
+              "This is my secret"
+            );
 
-          res.json({
-            status: 200,
-            message: "Connecting user",
-            token: jwtToken,
-            firstName: foundedUserByEmail.firstName,
-            lastName: foundedUserByEmail.lastName,
-            email: foundedUserByEmail.email,
-          });
-        } else {
-          res.json({ status: 401, message: "Wrong password" });
+            res.json({
+              status: 200,
+              message: "Connecting user",
+              token: jwtToken,
+              firstName: foundedUserByEmail.firstName,
+              lastName: foundedUserByEmail.lastName,
+              email: foundedUserByEmail.email,
+            });
+          } else {
+            res.json({ status: 401, message: "Wrong password" });
+          }
         }
-      }
-    );
-  } else {
-    res.json({
-      status: 402,
-      message: "You don't have an account, please sign up",
-    });
+      );
+    } else {
+      res.json({
+        status: 402,
+        message: "You don't have an account, please sign up",
+      });
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 
