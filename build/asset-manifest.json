@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.87b1e985.css",
+    "main.js": "/static/js/main.a20ad657.js",
+    "static/js/988.c9cd65e8.chunk.js": "/static/js/988.c9cd65e8.chunk.js",
+    "static/media/classroom.webp": "/static/media/classroom.cb5436505034bd38732d.webp",
+    "static/media/inspiration5.png": "/static/media/inspiration5.1275bcb31b086aa81609.png",
+    "static/media/office.png": "/static/media/office.8064d9258da3ee6dc079.png",
+    "static/media/families.png": "/static/media/families.82acde46907be73272fc.png",
+    "static/media/share.png": "/static/media/share.75494e06ba7f0915dad5.png",
+    "static/media/teacher.png": "/static/media/teacher.a1dbf41d26af8e5d2b75.png",
+    "static/media/login_illustration.png": "/static/media/login_illustration.efc8f67d04ad6e0ffa80.png",
+    "static/media/play.png": "/static/media/play.18bec987eb04cab043e8.png",
+    "static/media/create.png": "/static/media/create.a1cb5b0b20c58af6a331.png",
+    "static/media/inspiration4.jpg": "/static/media/inspiration4.bbad89955a7978086cb3.jpg",
+    "static/media/inspiration1.jpg": "/static/media/inspiration1.d14ca44e9f152526a0e7.jpg",
+    "static/media/inspiration6.jpg": "/static/media/inspiration6.461c43dc0df19bf6b6b5.jpg",
+    "static/media/inspiration3.jpg": "/static/media/inspiration3.a5f3b1f77fd277290109.jpg",
+    "static/media/inspiration-facebook.jpg": "/static/media/inspiration-facebook.4da081088cb88761ae05.jpg",
+    "static/media/avatar5.jpg": "/static/media/avatar5.b2b63ca82c0a340a4eb7.jpg",
+    "index.html": "/index.html",
+    "main.87b1e985.css.map": "/static/css/main.87b1e985.css.map",
+    "main.a20ad657.js.map": "/static/js/main.a20ad657.js.map",
+    "988.c9cd65e8.chunk.js.map": "/static/js/988.c9cd65e8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.87b1e985.css",
+    "static/js/main.a20ad657.js"
+  ]
+}

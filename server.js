@@ -14,31 +14,34 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, "build")));
+const PORT = process.env.PORT || 8080;
 
 ///////////////////////Socket.io initialzing////////////////////////////
-// const http = require("http");
-// const { Server } = require("socket.io");
+const http = require("http");
 
-// const server = http.createServer(app);
+const { Server } = require("socket.io");
 
-// const io = new Server(server, {
-//   cors: {
-//     origin: "http://localhost:3000",
-//     methods: ["GET", "POST"],
-//   },
-// });
+const server = http.createServer(app);
 
-// io.on("connection", (socket) => {
-//   socket.on("sendMessage", (data) => {
-//     console.log("Message: " + data.message);
-//     console.log("LectureNumber: " + data.lectureNumber);
-//     socket.broadcast.emit("receiveMessage", data);
-//   });
-// });
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:8080",
+    methods: ["GET", "POST"],
+  },
+});
 
-// server.listen(8081, () => {
-//   console.log("Socket server is running");
-// });
+io.on("connection", (socket) => {
+  socket.on("sendMessage", (data) => {
+    console.log("Message: " + data.message);
+    console.log("LectureNumber: " + data.lectureNumber);
+    socket.broadcast.emit("receiveMessage", data);
+  });
+});
+
+server.listen(8081, () => {
+  console.log("Socket server is running");
+});
 
 ////////////////////////////////////////////////////////////////////////
 let multerFileName;
@@ -297,7 +300,7 @@ app.get("/studentsUploads", async function (req, res) {
       res.json({
         status: 200,
         message: "Found student file url",
-        fileUrl: `https://techlectureback.onrender.com/studentsUploads/${newestFile}`,
+        fileUrl: `http://localhost:8080/studentsUploads/${newestFile}`,
         userFullName: userFullName,
         presentationNumber: presentationNumber,
       });
@@ -538,8 +541,12 @@ app.post("/contact", (req, res) => {
   });
 });
 
-app.listen(8080, () => {
-  console.log("App listening on port 8080");
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
 });
 
 // "mongodb+srv://omrip500:Dat8pfiZHtLb2FAU@cluster0.xjo1lhy.mongodb.net/"
