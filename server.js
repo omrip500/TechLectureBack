@@ -297,7 +297,7 @@ app.get("/studentsUploads", async function (req, res) {
     //send it back to the front
 
     const currentTime = new Date();
-    const fourSecondsAgo = new Date(currentTime.getTime() - 4 * 1000);
+    const fourSecondsAgo = new Date(currentTime.getTime() - 10 * 1000);
 
     if (newestFileDate && newestFileDate >= fourSecondsAgo) {
       res.json({
