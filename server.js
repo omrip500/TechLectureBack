@@ -10,6 +10,8 @@ const path = require("path");
 const fs = require("fs-extra");
 const bcrypt = require("bcrypt");
 const { log } = require("console");
+const socketIo = require("socket.io");
+
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -19,17 +21,18 @@ const PORT = process.env.PORT || 8080;
 
 ///////////////////////Socket.io initialzing////////////////////////////
 const http = require("http");
+const server = http.createServer(app);
 
 const { Server } = require("socket.io");
 
-const server = http.createServer(app);
+const io = socketIo(server);
 
-const io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:8080", "https://techlectureback.onrender.com"],
-    methods: ["GET", "POST"],
-  },
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: ["http://localhost:8080", "https://techlectureback.onrender.com"],
+//     methods: ["GET", "POST"],
+//   },
+// });
 
 io.on("connection", (socket) => {
   socket.on("sendMessage", (data) => {
@@ -39,9 +42,9 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(8081, () => {
-  console.log("Socket server is running");
-});
+// server.listen(8081, () => {
+//   console.log("Socket server is running");
+// });
 
 ////////////////////////////////////////////////////////////////////////
 let multerFileName;
@@ -545,7 +548,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
 
