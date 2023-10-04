@@ -27,24 +27,24 @@ const { Server } = require("socket.io");
 
 const io = socketIo(server);
 
-// const io = new Server(server, {
-//   cors: {
-//     origin: ["http://localhost:8080", "https://techlectureback.onrender.com"],
-//     methods: ["GET", "POST"],
-//   },
-// });
-
 io.on("connection", (socket) => {
-  socket.on("sendMessage", (data) => {
-    console.log("Message: " + data.message);
-    console.log("LectureNumber: " + data.lectureNumber);
-    socket.broadcast.emit("receiveMessage", data);
+  socket.on("joinRoom", ({ room }) => {
+    socket.join(room);
+
+    socket.on("userConnected", ({ userConnected, room }) => {
+      console.log("Room: " + room);
+      console.log("Message: " + userConnected);
+      socket.broadcast.to(room).emit("receiveMessage", userConnected);
+    });
+
+    socket.on("studentFileNumber", ({ fileNumber, userUploaded }) => {
+      socket.broadcast.to(room).emit("userFileNumber", {
+        fileNumber,
+        userUploaded,
+      });
+    });
   });
 });
-
-// server.listen(8081, () => {
-//   console.log("Socket server is running");
-// });
 
 ////////////////////////////////////////////////////////////////////////
 let multerFileName;
@@ -263,6 +263,81 @@ app.post(
   }
 );
 
+// app.get("/getLastStudentsUpload", async function (req, res) {
+//   try {
+//     const files = await fs.promises.readdir("studentsUploads");
+//     const lastModifiedFile = files.reduce((lastFile, file) => {
+//       const filePath = path.join("studentsUploads", file);
+//       const stats = fs.statSync(filePath);
+//       if (
+//         !lastFile ||
+//         stats.mtime > fs.statSync(path.join("studentsUploads", lastFile)).mtime
+//       ) {
+//         return file;
+//       }
+//       return lastFile;
+//     }, null);
+
+//     if (lastModifiedFile) {
+//       res.json({
+//         status: 200,
+//         message: "Found last modified student file",
+//         lastModifiedFile,
+//       });
+//     } else {
+//       res.status(404).json({
+//         status: 404,
+//         message: "No files found in studentsUploads directory",
+//       });
+//     }
+//   } catch (err) {
+//     console.error("Error reading files", err);
+//     res.status(500).json({
+//       status: 500,
+//       message: "Internal Server Error",
+//     });
+//   }
+// });
+
+// app.get("/studentsUploads/:fileNumber", async function (req, res) {
+//   const requestedFileNumber = req.params.fileNumber;
+
+//   try {
+//     const files = await fs.promises.readdir("studentsUploads");
+
+//     const lastModifiedFile = files.reduce((lastFile, file) => {
+//       const filePath = path.join("studentsUploads", file);
+//       const stats = fs.statSync(filePath);
+//       if (
+//         !lastFile ||
+//         stats.mtime > fs.statSync(path.join("studentsUploads", lastFile)).mtime
+//       ) {
+//         return file;
+//       }
+//       return lastFile;
+//     }, null);
+
+//     if (lastModifiedFile !== requestedFileNumber) {
+//       res.json({
+//         status: 200,
+//         message: "Found student file url",
+//         fileUrl: `/studentsUploads/${lastModifiedFile}`,
+//       });
+//     } else {
+//       res.status(404).json({
+//         status: 404,
+//         message: "Requested file not the last modified file",
+//       });
+//     }
+//   } catch (err) {
+//     console.error("Error reading files", err);
+//     res.status(500).json({
+//       status: 500,
+//       message: "Internal Server Error",
+//     });
+//   }
+// });
+
 app.get("/studentsUploads", async function (req, res) {
   const fileNumber = req.params.fileNumber;
   let newestFileDate = null;
@@ -297,13 +372,13 @@ app.get("/studentsUploads", async function (req, res) {
     //send it back to the front
 
     const currentTime = new Date();
-    const fourSecondsAgo = new Date(currentTime.getTime() - 10 * 1000);
+    const fourSecondsAgo = new Date(currentTime.getTime() - 4 * 1000);
 
     if (newestFileDate && newestFileDate >= fourSecondsAgo) {
       res.json({
         status: 200,
         message: "Found student file url",
-        fileUrl: `/studentsUploads/${newestFile}`,
+        fileUrl: `http://localhost:8080/studentsUploads/${newestFile}`,
         userFullName: userFullName,
         presentationNumber: presentationNumber,
       });
