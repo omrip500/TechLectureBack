@@ -30,6 +30,7 @@ const io = socketIo(server);
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ room }) => {
     socket.join(room);
+    console.log("new join");
 
     socket.on("userConnected", ({ userConnected, room }) => {
       console.log("Room: " + room);
@@ -43,6 +44,17 @@ io.on("connection", (socket) => {
         userUploaded,
       });
     });
+
+    socket.on(
+      "areStudentsPremittedToUploadFiles",
+      ({ studentsCanUploadFiles }) => {
+        console.log("Hey");
+        console.log("Have Premission: " + studentsCanUploadFiles);
+        socket.broadcast.to(room).emit("studentPremission", {
+          havePremission: studentsCanUploadFiles,
+        });
+      }
+    );
   });
 });
 
