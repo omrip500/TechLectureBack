@@ -566,6 +566,7 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
+  //login
   try {
     const foundedUserByEmail = await User.findOne({ email: req.body.email });
     if (foundedUserByEmail) {
