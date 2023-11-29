@@ -13,7 +13,7 @@ The application is deployed at [https://techlectureback.onrender.com/](https://t
 3. **Create New Lecture**: Lecturers can create a new lecture session.
 4. **Join Existing Lecture**: Users can join an existing lecture.
 5. **Delete Lecture**: Lecturers have the ability to delete an existing lecture.
-6. **Permission for Students to Upload Files**: Lecturers can dynamically grant students permission to upload files.
+6. **Permission for Students to Upload Files**: Lecturers can dynamically grant students permission to upload files during the ongoing lecture..
 7. **Prevent Students from Uploading Files**: Lecturers can revoke the permission for students to upload files during the ongoing lecture.
 
 ## Technologies Used
