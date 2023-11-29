@@ -29,8 +29,7 @@ The application is deployed at [https://techlectureback.onrender.com/](https://t
    ```bash
    npm install
    nodemon server.js
-
-
+   
 ## Screenshots
 
 ![Screenshot 1](screenshots/screenshot1.png)
