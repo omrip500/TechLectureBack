@@ -24,11 +24,14 @@ The application is deployed at [https://techlectureback.onrender.com/](https://t
 4. **Node.js**: JavaScript runtime environment used for running the server.
 
 ## Environment Variables
+````bach
+EMAIL_ADDRESS=your.email@gmail.com
+EMAIL_PASSWORD=your-email-password
+JWT_SECRET=your-jwt-secret
+PORT=8080
+````
 
-**EMAIL_ADDRESS** = Your email address(gmail).
-**EMAIL_PASSWORD** = "Your email password".
-**JWT_SECRET** = "Your swt secret".
-**PORT** = "8080".
+
 
 ## How to Run
 
