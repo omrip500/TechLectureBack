@@ -23,48 +23,57 @@ The application is deployed at [https://techlectureback.onrender.com/](https://t
 3. **React**: JavaScript library for building user interfaces used for the frontend.
 4. **Node.js**: JavaScript runtime environment used for running the server.
 
+## Environment Variables
+
+**EMAIL_ADDRESS** = Your email address(gmail);
+**EMAIL_PASSWORD** = "Your email password"
+**JWT_SECRET** = "Your swt secret"
+**PORT** = "8080"
+
 ## How to Run
 
 1. Install dependencies:
+
    ```bash
    npm install
    nodemon server.js
-   
+
+   ```
+
 ## Screenshots
 
 ![Screenshot 1](screenshots/screenshot1.png)
-*Home Screen*
+_Home Screen_
 
 ![Screenshot 2](screenshots/screenshot2.png)
-*Home Screen*
+_Home Screen_
 
 ![Screenshot 3](screenshots/screenshot3.png)
-*Registration Form*
+_Registration Form_
 
 ![Screenshot 4](screenshots/screenshot4.png)
-*Login Form*
+_Login Form_
 
 ![Screenshot 5](screenshots/screenshot5.png)
-*Identification of an authenticated user..*
+_Identification of an authenticated user.._
 
 ![Screenshot 6](screenshots/screenshot6.png)
-*Creating a new lecture Form*
+_Creating a new lecture Form_
 
 ![Screenshot 7](screenshots/screenshot8.png)
-*Upon creating a new lecture, a barcode is generated for students to easily join.*
+_Upon creating a new lecture, a barcode is generated for students to easily join._
 
 ![Screenshot 9](screenshots/screenshot9.png)
-*Lecturer Position.*
+_Lecturer Position._
 
 ![Screenshot 10](screenshots/screenshot10.png)
-*Joining a lecture form.*
+_Joining a lecture form._
 
 ![Screenshot 11](screenshots/screenshot11.png)
-*Popup notifying that a new user has joined the lecture.*
+_Popup notifying that a new user has joined the lecture._
 
 ![Screenshot 12](screenshots/screenshot12.png)
-*Student position during the lecture.*
+_Student position during the lecture._
 
 ![Screenshot 13](screenshots/screenshot13.png)
-*Popup alerting that a student has uploaded a file during the lecture, with a link to view the file.*
-
+_Popup alerting that a student has uploaded a file during the lecture, with a link to view the file._
