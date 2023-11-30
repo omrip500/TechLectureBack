@@ -25,10 +25,10 @@ The application is deployed at [https://techlectureback.onrender.com/](https://t
 
 ## Environment Variables
 
-**EMAIL_ADDRESS** = Your email address(gmail);
-**EMAIL_PASSWORD** = "Your email password"
-**JWT_SECRET** = "Your swt secret"
-**PORT** = "8080"
+**EMAIL_ADDRESS** = Your email address(gmail).
+**EMAIL_PASSWORD** = "Your email password".
+**JWT_SECRET** = "Your swt secret".
+**PORT** = "8080".
 
 ## How to Run
 
