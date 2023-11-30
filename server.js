@@ -11,12 +11,14 @@ const fs = require("fs-extra");
 const bcrypt = require("bcrypt");
 const { log } = require("console");
 const socketIo = require("socket.io");
+const dotenv = require("dotenv");
 
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, "build")));
+dotenv.config();
 const PORT = process.env.PORT || 8080;
 
 ///////////////////////Socket.io initialzing////////////////////////////
@@ -90,17 +92,14 @@ const studentUploads = multer({ storage: storage2 });
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "omrip500@gmail.com",
-    pass: "guzzxuqcykmklvbi",
+    user: process.env.EMAIL_ADDRESS,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
-mongoose.connect(
-  "mongodb+srv://omrip500:uNQmn2uUoWsUaboM@cluster0.mti5jjd.mongodb.net/",
-  {
-    useNewUrlParser: true,
-  }
-);
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+});
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -504,7 +503,7 @@ app.post("/login", async (req, res) => {
                 id: foundedUserByEmail.id,
                 email: foundedUserByEmail.email,
               },
-              "This is my secret"
+              process.env.JWT_SECRET
             );
 
             res.json({
@@ -563,7 +562,3 @@ app.get("*", (req, res) => {
 server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
-
-// "mongodb+srv://omrip500:Dat8pfiZHtLb2FAU@cluster0.xjo1lhy.mongodb.net/"
-
-// password for gmail: guzzxuqcykmklvbi
